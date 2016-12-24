@@ -5,6 +5,8 @@ import com.receipts.on.model.Prescription;
 
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Optional;
+
 import static spark.Spark.get;
 import static spark.Spark.post;
 
@@ -35,7 +37,14 @@ public class ReceiptResource {
 
         get(API_CONTEXT + "/prescriptions/:id", "application/json", (request, response) -> {
             Long prescriptionId = Long.valueOf(request.params(":id"));
-            return receiptRepository.find(prescriptionId);
+            Optional<Prescription> prescriptionOpt = receiptRepository.find(prescriptionId);
+
+            if (!prescriptionOpt.isPresent()) {
+                response.status(HttpServletResponse.SC_NOT_FOUND);
+                return null;
+            }
+
+            return prescriptionOpt.get();
         }, new JsonTransformer());
  
         get(API_CONTEXT + "/prescriptions", "application/json",
