@@ -11,7 +11,7 @@ public class Server {
         setPort(8080);
         staticFileLocation("/");
         Mongo mongoClient = new Mongo("localhost");
-        new ReceiptResource(new ReceiptService(mongoClient.getDB("receipts")));
+        new ReceiptResource(new ReceiptRepository(mongoClient.getDB("receipts")));
     	new QrCodeResource();
     }
 
