@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Serif:400,700&subset=cyrillic');
+
+body {
+    font-family: 'PT Serif', serif;
+}
+
+.panel h1 {
+    margin: 0;
+    padding: 0;
+}
+
+body > header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 35em;
+    padding: 0 15px;
+
+    text-align: center;
+
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../img/header.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+body > header > .logo {
+    display: inline-block;
+    border: 3px solid #FFF;
+    border-radius: 6px;
+    padding: 1em;
+    color: #FFF !important;
+}
+
+body > header > .logo .title {
+    display: block;
+    font-weight: 800;
+    font-size: 5em;
+    text-align: center;
+}
+
+body > header > .logo .desc {
+    display: block;
+    font-size: 2em;
+}
+
+body > section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+body > section > header {
+    font-weight: 800;
+    font-size: 3em;
+    text-align: center;
+}
+
+div.delimiter {
+    display: block;
+    width: 130px;
+    height: 3px;
+    background: #ffd500;
+    margin: 0 auto 20px;
+}
+
+div.delimiter:after {
+    content: "";
+    display: block;
+    width: 90px;
+    height: 3px;
+    background: #0070bb;
+}
