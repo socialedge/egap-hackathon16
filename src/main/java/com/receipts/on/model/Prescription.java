@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Builder
 @ToString
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(fluent = true)
 public class Prescription {
-    private final long prescriptionId = System.nanoTime();
+    private final String prescriptionId = UUID.randomUUID().toString();
     private final String patientName;
     private final String patientAddress;
     private final String doctorName;

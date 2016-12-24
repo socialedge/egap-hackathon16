@@ -38,9 +38,9 @@ public class ReceiptRepository {
         return prescriptions;
     }
 
-    public Optional<Prescription> find(Long id) {
+    public Optional<Prescription> find(String id) {
         DBObject query = new BasicDBObject();
-        query.put("prescriptionId", new ObjectId(String.valueOf(id)));
+        query.put("prescriptionId", new ObjectId(id));
         DBObject dbObject = collection.findOne(query);
 
         if (dbObject == null)
@@ -59,9 +59,9 @@ public class ReceiptRepository {
         return true;
     }
 
-    public boolean delete(Long id) {
+    public boolean delete(String id) {
         DBObject query = new BasicDBObject();
-        query.put("prescriptionId", new ObjectId(String.valueOf(id)));
+        query.put("prescriptionId", new ObjectId(id));
         DBObject dbObject = collection.findOne(query);
 
         if (dbObject == null)
