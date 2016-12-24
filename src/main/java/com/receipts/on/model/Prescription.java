@@ -3,6 +3,7 @@ package com.receipts.on.model;
 import com.mongodb.DBObject;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Prescription {
     private final long prescriptionId = System.nanoTime();
@@ -12,6 +13,7 @@ public class Prescription {
     private final LocalDate date;
     private final DispenseType dispenseType;
     private final AssignationType assignationType;
+    private List<Medication> medications;
 
     public Prescription(DBObject prescriptionObject) {
         patientName = (String) prescriptionObject.get("patientName");
@@ -20,6 +22,7 @@ public class Prescription {
         date = LocalDate.parse((String) prescriptionObject.get("date"));
         dispenseType = DispenseType.valueOf((String) prescriptionObject.get("dispenseType"));
         assignationType = AssignationType.valueOf((String) prescriptionObject.get("assignationType"));
+        //TODO initialize medications from DBObject
     }
 
     public long getPrescriptionId() {

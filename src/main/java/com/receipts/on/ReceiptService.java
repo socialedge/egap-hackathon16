@@ -49,6 +49,7 @@ public class ReceiptService {
         docBuilder.append("date", LocalDate.now().toString());
         docBuilder.append("dispenseType", prescription.getDispenseType().toString());
         docBuilder.append("assignationType", prescription.getAssignationType().toString());
+        //TODO append prescription medications
         return docBuilder.get();
     }
 
