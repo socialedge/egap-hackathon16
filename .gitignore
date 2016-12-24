@@ -1,14 +1,55 @@
+# Eclipse (https://github.com/github/gitignore/blob/master/Global/Eclipse.gitignore)
+.metadata
+.classpath
+.project
+.externalToolBuilders/
+.loadpath
+.settings/
+*.launch
+*.tmp
+*.bak
+*.swp
+*~.nib
+.cproject
+.factorypath
+.buildpath
+.target
+.texlipse
+
+# IntelliJ IDEA (https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore)
+.idea/
+.idea_modules/
+atlassian-ide-plugin.xml
+*.iml
+*.ipr
+*.iws
+/out/
+
+# Windows (https://github.com/github/gitignore/blob/master/Global/Windows.gitignore)
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+
+# OSX (https://github.com/github/gitignore/blob/master/Global/OSX.gitignore)
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux (https://github.com/github/gitignore/blob/master/Global/Linux.gitignore)
+*~
+.directory
+.Trash-*
+
+# Gradle
 .gradle
 build/
-
-# Ignore Gradle GUI config
 gradle-app.setting
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
-
-# Cache of project
 .gradletasknamecache
+gradle/
+gradlew*
 
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
+# Application
+*.log
