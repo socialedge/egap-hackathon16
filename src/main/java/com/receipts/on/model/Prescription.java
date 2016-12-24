@@ -3,11 +3,19 @@ package com.receipts.on.model;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Builder
+@ToString
+@Getter @Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@Accessors(fluent = true)
 public class Prescription {
     private final long prescriptionId = System.nanoTime();
     private final String patientName;
@@ -33,37 +41,5 @@ public class Prescription {
                                          o.getInt("count"),
                                          o.getString("description")))
                 .collect(Collectors.toList());
-    }
-
-    public long getPrescriptionId() {
-        return prescriptionId;
-    }
-
-    public String getDoctorName() {
-        return doctorName;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public DispenseType getDispenseType() {
-        return dispenseType;
-    }
-
-    public AssignationType getAssignationType() {
-        return assignationType;
-    }
-
-    public String getPatientName() {
-        return patientName;
-    }
-
-    public String getPatientAddress() {
-        return patientAddress;
-    }
-
-    public List<Medication> getMedications() {
-        return medications;
     }
 }

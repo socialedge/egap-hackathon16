@@ -42,13 +42,13 @@ public class ReceiptService {
     private DBObject createDBObject(Prescription prescription) {
         BasicDBObjectBuilder docBuilder = BasicDBObjectBuilder.start();
 
-        docBuilder.append("prescriptionId", prescription.getPrescriptionId());
-        docBuilder.append("patientName", prescription.getPatientName());
-        docBuilder.append("patientAddress", prescription.getPatientAddress());
-        docBuilder.append("doctorName", prescription.getDoctorName());
+        docBuilder.append("prescriptionId", prescription.prescriptionId());
+        docBuilder.append("patientName", prescription.patientName());
+        docBuilder.append("patientAddress", prescription.patientAddress());
+        docBuilder.append("doctorName", prescription.doctorName());
         docBuilder.append("date", LocalDate.now().toString());
-        docBuilder.append("dispenseType", prescription.getDispenseType().toString());
-        docBuilder.append("assignationType", prescription.getAssignationType().toString());
+        docBuilder.append("dispenseType", prescription.dispenseType().toString());
+        docBuilder.append("assignationType", prescription.assignationType().toString());
         //TODO append prescription medications
         return docBuilder.get();
     }
