@@ -1,6 +1,5 @@
 package com.receipts.on;
 
-import com.google.gson.Gson;
 import com.mongodb.*;
 import com.receipts.on.model.AssignationType;
 import com.receipts.on.model.DispenseType;
@@ -10,6 +9,7 @@ import com.receipts.on.model.Prescription;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ReceiptRepository {
@@ -18,6 +18,14 @@ public class ReceiptRepository {
  
     public ReceiptRepository(DB db) {
         this.collection = db.getCollection("receipts");
+    }
+
+    public boolean create(Prescription prescription) {
+        if (exists(prescription))
+            return false;
+
+        collection.insert(serialize(prescription));
+        return true;
     }
  
     public List<Prescription> findAll() {
@@ -30,17 +38,45 @@ public class ReceiptRepository {
         return prescriptions;
     }
 
-    public Prescription find(String id) {
+    public Optional<Prescription> find(Long id) {
         DBObject query = new BasicDBObject();
-        query.put("prescriptionId", new ObjectId(id));
+        query.put("prescriptionId", new ObjectId(String.valueOf(id)));
         DBObject dbObject = collection.findOne(query);
-        return deserializePrescription(dbObject);
+
+        if (dbObject == null)
+            return Optional.empty();
+
+        return Optional.of(deserializePrescription(dbObject));
     }
- 
-    public void createNew(String body) {
-        Prescription prescription = new Gson().fromJson(body, Prescription.class);
-        DBObject doc = serialize(prescription);
-        collection.insert(doc);
+
+    public boolean update(Prescription prescription) {
+        if (!exists(prescription))
+            return false;
+
+        DBObject query = new BasicDBObject();
+        query.put("prescriptionId", new ObjectId(String.valueOf(prescription.prescriptionId())));
+        collection.update(query, serialize(prescription));
+        return true;
+    }
+
+    public boolean delete(Long id) {
+        DBObject query = new BasicDBObject();
+        query.put("prescriptionId", new ObjectId(String.valueOf(id)));
+        DBObject dbObject = collection.findOne(query);
+
+        if (dbObject == null)
+            return false;
+
+        collection.remove(dbObject);
+        return true;
+    }
+
+    public boolean delete(Prescription prescription) {
+        return delete(prescription.prescriptionId());
+    }
+
+    public boolean exists(Prescription prescription) {
+        return find(prescription.prescriptionId()).isPresent();
     }
 
     private DBObject serialize(Prescription prescription) {
