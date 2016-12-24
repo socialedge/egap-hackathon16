@@ -1,9 +1,12 @@
 package com.receipts.on.model;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Prescription {
     private final long prescriptionId = System.nanoTime();
@@ -22,7 +25,14 @@ public class Prescription {
         date = LocalDate.parse((String) prescriptionObject.get("date"));
         dispenseType = DispenseType.valueOf((String) prescriptionObject.get("dispenseType"));
         assignationType = AssignationType.valueOf((String) prescriptionObject.get("assignationType"));
-        //TODO initialize medications from DBObject
+
+        BasicDBList medicationsList = (BasicDBList) prescriptionObject.get("medications");
+        medications = medicationsList.stream()
+                .map(o -> (BasicDBObject) o)
+                .map(o -> new Medication(o.getString("name"),
+                                         o.getInt("count"),
+                                         o.getString("description")))
+                .collect(Collectors.toList());
     }
 
     public long getPrescriptionId() {
