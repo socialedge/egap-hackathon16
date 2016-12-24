@@ -9,7 +9,7 @@ public class Prescription {
     private final long prescriptionId = System.nanoTime();
     private final String patientName;
     private final String patientAddress;
-    private final long doctorId;
+    private final String doctorName;
     private final LocalDate date;
     private final DispenseType dispenseType;
     private final AssignationType assignationType;
@@ -18,7 +18,7 @@ public class Prescription {
     public Prescription(DBObject prescriptionObject) {
         patientName = (String) prescriptionObject.get("patientName");
         patientAddress = (String) prescriptionObject.get("patientAddress");
-        doctorId = (long) prescriptionObject.get("doctorId");
+        doctorName = (String) prescriptionObject.get("doctorName");
         date = LocalDate.parse((String) prescriptionObject.get("date"));
         dispenseType = DispenseType.valueOf((String) prescriptionObject.get("dispenseType"));
         assignationType = AssignationType.valueOf((String) prescriptionObject.get("assignationType"));
@@ -29,8 +29,8 @@ public class Prescription {
         return prescriptionId;
     }
 
-    public long getDoctorId() {
-        return doctorId;
+    public String getDoctorName() {
+        return doctorName;
     }
 
     public LocalDate getDate() {
@@ -51,5 +51,9 @@ public class Prescription {
 
     public String getPatientAddress() {
         return patientAddress;
+    }
+
+    public List<Medication> getMedications() {
+        return medications;
     }
 }

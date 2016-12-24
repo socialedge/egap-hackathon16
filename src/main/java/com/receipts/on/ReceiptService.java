@@ -45,7 +45,7 @@ public class ReceiptService {
         docBuilder.append("prescriptionId", prescription.getPrescriptionId());
         docBuilder.append("patientName", prescription.getPatientName());
         docBuilder.append("patientAddress", prescription.getPatientAddress());
-        docBuilder.append("doctorId", prescription.getDoctorId());
+        docBuilder.append("doctorName", prescription.getDoctorName());
         docBuilder.append("date", LocalDate.now().toString());
         docBuilder.append("dispenseType", prescription.getDispenseType().toString());
         docBuilder.append("assignationType", prescription.getAssignationType().toString());
