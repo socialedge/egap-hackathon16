@@ -36,8 +36,7 @@ public class ReceiptResource {
         }, new JsonTransformer());
 
         get(API_CONTEXT + "/prescriptions/:id", "application/json", (request, response) -> {
-            Long prescriptionId = Long.valueOf(request.params(":id"));
-            Optional<Prescription> prescriptionOpt = receiptRepository.find(prescriptionId);
+            Optional<Prescription> prescriptionOpt = receiptRepository.find(request.params(":id"));
 
             if (!prescriptionOpt.isPresent()) {
                 response.status(HttpServletResponse.SC_NOT_FOUND);

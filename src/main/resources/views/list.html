@@ -1,0 +1,25 @@
+<h2>All Receipts <a class="btn btn-primary pull-right" href="#/create"><i
+        class="icon-plus-sign icon-white"></i> New Receipt</a></h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Patient Name
+        </th>
+        <th>
+            Patient Age
+        </th>
+    </tr>
+    <tr ng-repeat="receipt in receipts">
+        <td>{{$index+1}}</td>
+        <td>
+            {{receipt.patientName}}
+        </td>
+        <td>
+            {{receipt.age}}
+        </td>
+    </tr>
+</table>
