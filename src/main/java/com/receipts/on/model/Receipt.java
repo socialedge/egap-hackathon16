@@ -8,10 +8,12 @@ public class Receipt {
     }
 
     public Receipt(DBObject object) {
+        this.id = object.get("_id").toString();
         this.patientName = (String) object.get("name");
         this.age = (Integer)object.get("age");
     }
 
+    private String id;
 	private String patientName;
 	private int age;
 
@@ -30,4 +32,12 @@ public class Receipt {
 	public int getAge() {
 		return age;
 	}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

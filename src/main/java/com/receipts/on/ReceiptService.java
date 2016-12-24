@@ -16,28 +16,26 @@ public class ReceiptService {
     }
  
     public List<Receipt> findAll() {
-        System.out.println("findAll");
         List<Receipt> receipts = new ArrayList<>();
         DBCursor dbObjects = collection.find();
         while (dbObjects.hasNext()) {
             DBObject dbObject = dbObjects.next();
-            receipts.add(new Receipt());
+            receipts.add(new Receipt(dbObject));
         }
         return receipts;
     }
  
     public void createNew(String body) {
-        System.out.println("createNew");
         Receipt receipt = new Gson().fromJson(body, Receipt.class);
         DBObject doc = createDBObject(receipt);
         collection.insert(doc);
     }
 
     public Receipt find(String id) {
-        System.out.println("find" + id);
         DBObject query = new BasicDBObject();
-        query.put("_id", id);
-        return new Receipt(collection.findOne(query));
+        query.put("_id", new ObjectId(id));
+        DBObject dbObject = collection.findOne(query);
+        return new Receipt(dbObject);
     }
 
     private DBObject createDBObject(Receipt receipt) {
