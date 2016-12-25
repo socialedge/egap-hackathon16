@@ -49,7 +49,7 @@ public class Notifications {
             MimeMultipart content = new MimeMultipart("related");
 
             MimeBodyPart htmlPart = new MimeBodyPart();
-            htmlPart.setText(HtmlUtils.prescriptionTable(prescription, url, cid), "UTF-8");
+            htmlPart.setContent(HtmlUtils.prescriptionTable(prescription, url, cid), "text/html; charset=utf-8");
             content.addBodyPart(htmlPart);
 
             MimeBodyPart imagePart = new MimeBodyPart();
