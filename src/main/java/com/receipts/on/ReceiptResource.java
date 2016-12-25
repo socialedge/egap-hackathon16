@@ -2,6 +2,7 @@ package com.receipts.on;
 
 import com.google.gson.Gson;
 import com.receipts.on.model.Prescription;
+import com.receipts.on.util.Notifications;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,5 +49,20 @@ public class ReceiptResource {
  
         get(API_CONTEXT + "/prescriptions", "application/json",
                 (request, response) -> receiptRepository.findAll(), new JsonTransformer());
+
+        post(API_CONTEXT + "/prescriptions/:id/notifications/emails", "application/json", (request, response) -> {
+            Optional<Prescription> prescriptionOpt = receiptRepository.find(request.params(":id"));
+
+            if (!prescriptionOpt.isPresent()) {
+                response.status(HttpServletResponse.SC_NOT_FOUND);
+                return null;
+            }
+
+            Notifications.sendEmail(prescriptionOpt.get());
+
+            response.status(HttpServletResponse.SC_OK);
+
+            return response;
+        }, new JsonTransformer());
     }
 }
