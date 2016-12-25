@@ -12,7 +12,6 @@ public class Server {
         staticFileLocation("/");
         Mongo mongoClient = new Mongo("localhost");
         new ReceiptResource(new ReceiptRepository(mongoClient.getDB("receipts")));
-    	new QrCodeResource();
     }
 
 }
