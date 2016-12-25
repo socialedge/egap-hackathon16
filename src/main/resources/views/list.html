@@ -23,7 +23,7 @@
                             <td>{{receipt.patientName}}</td>
                             <td>{{receipt.doctorName}}</td>
                             <td>{{receipt.date}}</td>
-                            <td>{{receipt.medications}}</td>
+                            <td><span ng-repeat="medication in receipt.medications">{{medication.name}} - {{medication.count}} - {{medication.description}}</span></td>
                             <td>
                                 <div class="btn-group btn-group-justified" role="group">
                                     <div class="btn-group" role="group">
@@ -45,7 +45,7 @@
 
         <div class="row">
             <div class="col-md-2 col-md-offset-9">
-                <a role="button" class="btn btn-success btn-block" href="prescription-new.html">New prescription</a>
+                <a role="button" class="btn btn-success btn-block" href="#/create">New prescription</a>
             </div>
         </div>
     </section>

@@ -18,18 +18,20 @@ public class Prescription {
     private final String patientName;
     private final String patientAddress;
     private final String doctorName;
-    private final LocalDate date;
+    private final String date;
     private final DispenseType dispenseType;
     private final AssignationType assignationType;
     private List<Medication> medications;
 
-    public Prescription(AssignationType assignationType, String patientName, String patientAddress, String doctorName, LocalDate date, DispenseType dispenseType) {
+    public Prescription(AssignationType assignationType, String patientName, String patientAddress,
+                        String doctorName, String date, DispenseType dispenseType, List<Medication> medications) {
         this.assignationType = assignationType;
         this.patientName = patientName;
         this.patientAddress = patientAddress;
         this.doctorName = doctorName;
         this.date = date;
         this.dispenseType = dispenseType;
+        this.medications = medications;
     }
 
 
@@ -50,7 +52,7 @@ public class Prescription {
         return doctorName;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
