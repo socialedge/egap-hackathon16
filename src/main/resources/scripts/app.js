@@ -1,4 +1,4 @@
-var app = angular.module('receipts', [
+var app = angular.module('receiptsapp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
@@ -18,7 +18,7 @@ app.config(function ($routeProvider) {
 });
 
 app.controller('ListCtrl', function ($scope, $http) {
-    $http.get('/api/v1/receipts').success(function (data) {
+    $http.get('/api/v1/prescriptions').success(function (data) {
         $scope.receipts = data;
     }).error(function (data, status) {
         console.log('Error ' + data)

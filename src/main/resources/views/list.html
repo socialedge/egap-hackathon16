@@ -1,25 +1,52 @@
-<h2>All Receipts <a class="btn btn-primary pull-right" href="#/create"><i
-        class="icon-plus-sign icon-white"></i> New Receipt</a></h2>
+<section>
+    <header>
+        Database
+        <div class="delimiter"></div>
+    </header>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-default">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Medications</th>
+                            <th width="300px">Actions</th>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="receipt in receipts">
+                            <td>{{$index+1}}</td>
+                            <td>{{receipt.patientName}}</td>
+                            <td>{{receipt.doctorName}}</td>
+                            <td>{{receipt.date}}</td>
+                            <td>{{receipt.medications}}</td>
+                            <td>
+                                <div class="btn-group btn-group-justified" role="group">
+                                    <div class="btn-group" role="group">
+                                        <a role="button" class="btn btn-primary" href="prescription.html">Open</a>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-info">Send email</button>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-warning">QR Code</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-<table class="table table-hover">
-    <tr>
-        <th>
-            #
-        </th>
-        <th>
-            Patient Name
-        </th>
-        <th>
-            Patient Age
-        </th>
-    </tr>
-    <tr ng-repeat="receipt in receipts">
-        <td>{{$index+1}}</td>
-        <td>
-            {{receipt.patientName}}
-        </td>
-        <td>
-            {{receipt.age}}
-        </td>
-    </tr>
-</table>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-9">
+                <a role="button" class="btn btn-success btn-block" href="prescription-new.html">New prescription</a>
+            </div>
+        </div>
+    </section>
+</section>

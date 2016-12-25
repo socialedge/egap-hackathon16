@@ -21,9 +21,6 @@ public class ReceiptRepository {
     }
 
     public boolean create(Prescription prescription) {
-        if (exists(prescription))
-            return false;
-
         collection.insert(serialize(prescription));
         return true;
     }
@@ -54,7 +51,7 @@ public class ReceiptRepository {
             return false;
 
         DBObject query = new BasicDBObject();
-        query.put("prescriptionId", new ObjectId(String.valueOf(prescription.prescriptionId())));
+        query.put("prescriptionId", new ObjectId(String.valueOf(prescription.getPrescriptionId())));
         collection.update(query, serialize(prescription));
         return true;
     }
@@ -72,51 +69,48 @@ public class ReceiptRepository {
     }
 
     public boolean delete(Prescription prescription) {
-        return delete(prescription.prescriptionId());
+        return delete(prescription.getPrescriptionId());
     }
 
     public boolean exists(Prescription prescription) {
-        return find(prescription.prescriptionId()).isPresent();
+        return find(prescription.getPrescriptionId()).isPresent();
     }
 
     private DBObject serialize(Prescription prescription) {
         BasicDBObjectBuilder docBuilder = BasicDBObjectBuilder.start();
 
-        docBuilder.append("prescriptionId", prescription.prescriptionId());
-        docBuilder.append("patientName", prescription.patientName());
-        docBuilder.append("patientAddress", prescription.patientAddress());
-        docBuilder.append("doctorName", prescription.doctorName());
+        docBuilder.append("prescriptionId", prescription.getPrescriptionId());
+        docBuilder.append("patientName", prescription.getPatientName());
+        docBuilder.append("patientAddress", prescription.getPatientAddress());
+        docBuilder.append("doctorName", prescription.getDoctorName());
         docBuilder.append("date", LocalDate.now().toString());
-        docBuilder.append("dispenseType", prescription.dispenseType().toString());
-        docBuilder.append("assignationType", prescription.assignationType().toString());
+        docBuilder.append("dispenseType", prescription.getDispenseType().toString());
+        docBuilder.append("assignationType", prescription.getAssignationType().toString());
 
         List<Object> medicationList = new BasicDBList();
-        prescription.medications().forEach(med -> medicationList.add(serializeMedication(med)));
+        prescription.getMedications().forEach(med -> medicationList.add(serializeMedication(med)));
         docBuilder.append("medications", medicationList);
 
         return docBuilder.get();
     }
 
     private Prescription deserializePrescription(DBObject prescriptionObject) {
-        Prescription.PrescriptionBuilder prescrBuilder = Prescription.builder();
-
-        prescrBuilder.patientName((String) prescriptionObject.get("patientName"))
-                     .patientAddress((String) prescriptionObject.get("patientAddress"))
-                     .doctorName((String) prescriptionObject.get("doctorName"))
-                     .date(LocalDate.parse((String) prescriptionObject.get("date")))
-                     .dispenseType(DispenseType.valueOf((String) prescriptionObject.get("dispenseType")))
-                     .assignationType(AssignationType.valueOf((String) prescriptionObject.get("assignationType")))
-                     .medications(deserializeMedications((BasicDBList) prescriptionObject.get("medications")));
-
-        return prescrBuilder.build();
+        return new Prescription(
+                AssignationType.valueOf((String) prescriptionObject.get("assignationType")),
+                (String) prescriptionObject.get("patientName"),
+                (String) prescriptionObject.get("patientAddress"),
+                (String) prescriptionObject.get("doctorName"),
+                LocalDate.parse((String) prescriptionObject.get("date")),
+                DispenseType.valueOf((String) prescriptionObject.get("dispenseType"))
+        );
     }
 
     private DBObject serializeMedication(Medication medication) {
         BasicDBObjectBuilder medBuilder = BasicDBObjectBuilder.start();
 
-        medBuilder.append("name", medication.name());
-        medBuilder.append("count", medication.count());
-        medBuilder.append("description", medication.description());
+        medBuilder.append("name", medication.getName());
+        medBuilder.append("count", medication.getCount());
+        medBuilder.append("description", medication.getDescription());
 
         return medBuilder.get();
     }

@@ -54,7 +54,7 @@ public class ReceiptResource {
                         return null;
                     }
 
-                    byte[] qrCode = QrCodes.generateCode(prescriptionOpt.get().prescriptionId());
+                    byte[] qrCode = QrCodes.generateCode(prescriptionOpt.get().getPrescriptionId());
 
                     response.raw().setContentType("image/jpeg");
                     response.raw().getOutputStream().write(qrCode);
