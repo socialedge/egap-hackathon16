@@ -8,10 +8,10 @@ public class HtmlUtils {
     private static final String thElement = "<th style=\"padding:10px; text-align:center;\">";
     private static final String tdElement = "<td style=\"padding:10px; text-align:center;\">";
 
-    public static String prescriptionTable(Prescription prescription) {
+    public static String prescriptionTable(Prescription prescription, String url) {
         String rows = prescription.medications().stream().map(HtmlUtils::generateRow).reduce("", (result, s) -> result += s);
 
-        return "<table border=1 style=\"border: 1px solid #1464dc; border-collapse:collapse\">\n" +
+        return "<p><a href = \""+url+"\">View on web site</a></p>" + "<table border=1 style=\"border: 1px solid #1464dc; border-collapse:collapse\">\n" +
                 "    <thead>\n" +
                 "        <tr>\n" +
                 thElement + "            Назва</th>\n" +

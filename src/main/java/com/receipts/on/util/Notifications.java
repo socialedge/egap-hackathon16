@@ -15,7 +15,7 @@ public class Notifications {
 
     private static final String SUBJECT = "Рецепт від лікаря";
 
-    public static void sendEmail(Prescription prescription) {
+    public static void sendEmail(Prescription prescription, String url) {
         Properties props = new Properties();
         props.setProperty("mail.debug", "true");
         props.setProperty("javax.net.ssl.debug", "all");
@@ -43,7 +43,7 @@ public class Notifications {
         try {
             MimeMessage message = new MimeMessage(session);
             message.setSubject(SUBJECT);
-            message.setContent(HtmlUtils.prescriptionTable(prescription), "text/html; charset=utf-8");
+            message.setContent(HtmlUtils.prescriptionTable(prescription, url), "text/html; charset=utf-8");
             message.setRecipients(Message.RecipientType.TO, RECIPIENT);
             message.setSender(new InternetAddress(USERNAME));
             Transport.send(message);
