@@ -6,8 +6,9 @@ import com.receipts.on.model.DispenseType;
 import com.receipts.on.model.Medication;
 import com.receipts.on.model.Prescription;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,7 +84,7 @@ public class ReceiptRepository {
         docBuilder.append("patientName", prescription.getPatientName());
         docBuilder.append("patientAddress", prescription.getPatientAddress());
         docBuilder.append("doctorName", prescription.getDoctorName());
-        docBuilder.append("date", LocalDate.now().toString());
+        docBuilder.append("date", new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
         docBuilder.append("dispenseType", prescription.getDispenseType().toString());
         docBuilder.append("assignationType", prescription.getAssignationType().toString());
 
@@ -100,8 +101,9 @@ public class ReceiptRepository {
                 (String) prescriptionObject.get("patientName"),
                 (String) prescriptionObject.get("patientAddress"),
                 (String) prescriptionObject.get("doctorName"),
-                LocalDate.parse((String) prescriptionObject.get("date")),
-                DispenseType.valueOf((String) prescriptionObject.get("dispenseType"))
+                (String) prescriptionObject.get("date"),
+                DispenseType.valueOf((String) prescriptionObject.get("dispenseType")),
+                deserializeMedications((BasicDBList) prescriptionObject.get("medications"))
         );
     }
 

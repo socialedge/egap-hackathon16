@@ -35,7 +35,7 @@ public class ReceiptResource {
                 response.status(HttpServletResponse.SC_CONFLICT);
 
             return response;
-        }, new JsonTransformer());
+        });
 
         get(API_CONTEXT + "/prescriptions/:id", "application/json", (request, response) -> {
             Optional<Prescription> prescriptionOpt = receiptRepository.find(request.params(":id"));
