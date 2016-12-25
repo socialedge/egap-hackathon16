@@ -3,9 +3,9 @@ package com.receipts.on;
 import com.google.gson.Gson;
 import com.receipts.on.model.Prescription;
 import com.receipts.on.util.Notifications;
+import com.receipts.on.util.QrCodes;
 
 import javax.servlet.http.HttpServletResponse;
-
 import java.util.Optional;
 
 import static spark.Spark.get;
@@ -46,6 +46,24 @@ public class ReceiptResource {
 
             return prescriptionOpt.get();
         }, new JsonTransformer());
+
+        get(API_CONTEXT + "/prescriptions/:id/qrcodes/identifier", (request, response) -> {
+                    Optional<Prescription> prescriptionOpt = receiptRepository.find(request.params(":id"));
+
+                    if (!prescriptionOpt.isPresent()) {
+                        response.status(HttpServletResponse.SC_NOT_FOUND);
+                        return null;
+                    }
+
+                    byte[] qrCode = QrCodes.generateCode(prescriptionOpt.get().prescriptionId());
+
+                    response.raw().setContentType("image/jpeg");
+                    response.raw().getOutputStream().write(qrCode);
+
+                    return null;
+        });
+
+        // TODO: add /prescriptions/:id/qrcodes/url endpoint
  
         get(API_CONTEXT + "/prescriptions", "application/json",
                 (request, response) -> receiptRepository.findAll(), new JsonTransformer());
