@@ -4,7 +4,10 @@ import com.receipts.on.model.Prescription;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.File;
 import java.util.Properties;
 
 public class Notifications {
@@ -41,9 +44,25 @@ public class Notifications {
         });
 
         try {
+            String cid = prescription.getPrescriptionId();
+
+            MimeMultipart content = new MimeMultipart("related");
+
+            MimeBodyPart htmlPart = new MimeBodyPart();
+            htmlPart.setContent(HtmlUtils.prescriptionTable(prescription, url, cid), "text/html; charset=utf-8");
+            content.addBodyPart(htmlPart);
+
+            MimeBodyPart imagePart = new MimeBodyPart();
+            File qrCodeFile = QrCodes.generateCodeToFile(prescription.getPrescriptionId());
+            imagePart.attachFile(qrCodeFile);
+            imagePart.setContentID("<" + cid + ">");
+            imagePart.setDisposition(MimeBodyPart.INLINE);
+            content.addBodyPart(imagePart);
+
+
             MimeMessage message = new MimeMessage(session);
             message.setSubject(SUBJECT);
-            message.setContent(HtmlUtils.prescriptionTable(prescription, url), "text/html; charset=utf-8");
+            message.setContent(content);
             message.setRecipients(Message.RecipientType.TO, RECIPIENT);
             message.setSender(new InternetAddress(USERNAME));
             Transport.send(message);
